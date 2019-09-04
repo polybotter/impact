@@ -2,23 +2,29 @@ package numberrangesummarizer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public class Summarize implements NumberRangeSummarizer{
 	
 	public String runSummarize(String input) {
-		input = input.replaceAll("[^0-9,]", "");
 		Collection<Integer> numbers = collect(input.trim());
 		return summarizeCollection(numbers);
 	}
 	
 	@Override
 	public Collection<Integer> collect(String input) {
+		input = input.replaceAll("[^0-9,]", "");
         String[] collection = input.split(",");
         List<Integer> numbers = new ArrayList<>();
         for(int i = 0; i < collection.length; i++){
         	numbers.add(Integer.parseInt(collection[i]));
         }
+        HashSet<Integer> setNumbers = new HashSet<>(numbers);
+        numbers.clear();
+        numbers.addAll(setNumbers);
+        Collections.sort(numbers);
         return numbers;
 	}
 
